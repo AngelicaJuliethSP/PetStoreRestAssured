@@ -6,7 +6,6 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.apache.http.HttpHeaders;
 
 import java.util.Map;
 
@@ -15,7 +14,8 @@ public class RequestBuilder {
     private static RequestSpecification baseSpec(String baseUrl) {
         return RestAssured.given()
                 .baseUri(baseUrl)
-                .header(HttpHeaders.CONTENT_TYPE, ContentType.JSON.getAcceptHeader())
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
                 .filter(new RequestLoggingFilter())
                 .filter(new ResponseLoggingFilter());
     }
