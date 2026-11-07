@@ -23,6 +23,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Allure TestNG adapter: genera allure-results/ en formato JSON -->
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-testng</artifactId>
+            <version>2.29.1</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>rest-assured</artifactId>
