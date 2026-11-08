@@ -1,37 +1,37 @@
-# PetStore Rest Assured Framework
+# Framework de Automatización PetStore Rest Assured
 
-API test automation framework for the [Petstore REST API](https://petstore.swagger.io/) built with Rest Assured, Java, and TestNG, following a layered design (request builder → models → tests).
+Framework de automatización de pruebas de API para la [API REST Petstore](https://petstore.swagger.io/) construido con Rest Assured, Java y TestNG, siguiendo un diseño en capas (constructor de peticiones → modelos → pruebas).
 
-## Overview
+## Descripción general
 
-This project automates six core scenarios against the Petstore API:
+Este proyecto automatiza seis escenarios principales contra la API Petstore:
 
-- **Get pet by ID**: retrieve a pet by its identifier and validate the response schema and data.
-- **Get pets by status**: query pets filtered by status (`available`, `pending`, `sold`) and validate the list contents.
-- **Create order**: place a store order and verify the API confirmation.
-- **Create user**: register a new user and verify the API response.
-- **Login user**: authenticate with valid credentials and validate the session response.
-- **Logout user**: end the session and validate the logout confirmation.
+- **Obtener mascota por ID**: recuperar una mascota por su identificador y validar el esquema y los datos de la respuesta.
+- **Obtener mascotas por estado**: consultar mascotas filtradas por estado (`available`, `pending`, `sold`) y validar el contenido de la lista.
+- **Crear orden**: registrar una orden en la tienda y verificar la confirmación de la API.
+- **Crear usuario**: registrar un nuevo usuario y verificar la respuesta de la API.
+- **Login de usuario**: autenticar con credenciales válidas y validar la respuesta de la sesión.
+- **Logout de usuario**: finalizar la sesión y validar la confirmación del cierre.
 
-## Tech Stack
+## Stack tecnológico
 
-| Tool | Version | Purpose |
+| Herramienta | Versión | Propósito |
 |---|---|---|
-| Java | 17 | Programming language |
-| Maven | 3.x | Build and dependency management |
-| Rest Assured | 5.x | REST API testing |
-| TestNG | 7.10.2 | Test runner and annotations |
-| Jackson | 2.x | JSON serialization/deserialization |
+| Java | 17 | Lenguaje de programación |
+| Maven | 3.x | Compilación y gestión de dependencias |
+| Rest Assured | 5.x | Pruebas de API REST |
+| TestNG | 7.10.2 | Ejecutor de pruebas y anotaciones |
+| Jackson | 2.x | Serialización/deserialización JSON |
 
-## Project Structure
+## Estructura del proyecto
 
 ```
 PetStoreRestAssured/
 ├── src/
 │   └── test/java/com/globant/automation/
 │       ├── config/
-│       │   └── TestRunner.java       # Suite setup, config.properties loading
-│       ├── model/                    # POJOs mapped from/to JSON
+│       │   └── TestRunner.java       # Setup de la suite, carga de config.properties
+│       ├── model/                    # POJOs mapeados desde/hacia JSON
 │       │   ├── ApiResponse.java
 │       │   ├── Category.java
 │       │   ├── Order.java
@@ -39,7 +39,7 @@ PetStoreRestAssured/
 │       │   ├── Tag.java
 │       │   └── User.java
 │       ├── request/
-│       │   └── RequestBuilder.java   # Rest Assured request specification
+│       │   └── RequestBuilder.java   # Especificación de peticiones Rest Assured
 │       └── test/
 │           ├── GetPetByIdTest.java
 │           ├── GetPetsByStatusTest.java
@@ -48,57 +48,57 @@ PetStoreRestAssured/
 │           ├── LoginUserTest.java
 │           └── LogoutUserTest.java
 ├── src/test/resources/
-│   └── config.properties             # Base URL configuration
+│   └── config.properties             # Configuración de la URL base
 ├── testng.xml
 ├── pom.xml
 └── .gitignore
 ```
 
-## Design Decisions
+## Decisiones de diseño
 
-- **Layered architecture**: `RequestBuilder` centralizes the Rest Assured specification (base URI, content type, logging); POJOs in `model/` handle JSON mapping; test classes contain only assertions and business-level validations.
-- **Externalized base URL**: the target API URL is read from `src/test/resources/config.properties`, keeping environments configurable without code changes.
-- **Declarative validation**: responses are deserialized to POJOs and validated with TestNG assertions for readable failure messages.
+- **Arquitectura en capas**: `RequestBuilder` centraliza la especificación de Rest Assured (URI base, content type, logging); los POJOs en `model/` manejan el mapeo JSON; las clases de pruebas contienen solo aserciones y validaciones de negocio.
+- **URL base externalizada**: la URL de la API objetivo se lee de `src/test/resources/config.properties`, manteniendo los entornos configurables sin cambios de código.
+- **Validación declarativa**: las respuestas se deserializan a POJOs y se validan con aserciones de TestNG para obtener mensajes de fallo legibles.
 
-## How to Run
+## Cómo ejecutar
 
-Clone the repository and run:
+Clona el repositorio y ejecuta:
 
 ```bash
 mvn clean test
 ```
 
-### Prerequisites
+### Prerrequisitos
 
-- JDK 17 or higher
+- JDK 17 o superior
 - Maven 3.6+
-- Internet access to `https://petstore.swagger.io/v2`
+- Acceso a internet hacia `https://petstore.swagger.io/v2`
 
-## CI/CD Pipeline
+## Pipeline CI/CD
 
-The suite runs automatically on GitHub Actions on every push/PR to `main`,
-manually (workflow_dispatch), and **daily at 06:00 UTC (01:00 Colombia)** via
-cron. Each run produces:
+La suite corre automáticamente en GitHub Actions en cada push/PR a `main`,
+manualmente (workflow_dispatch) y **a diario a las 06:00 UTC (01:00 Colombia)**
+vía cron. Cada ejecución produce:
 
-| Artifact | Description |
+| Artefacto | Descripción |
 |---|---|
-| `surefire-reports-api` | Surefire XML reports |
-| `allure-results-api` | Allure raw results |
-| `allure-report-api` | Navigable Allure HTML report |
+| `surefire-reports-api` | Reportes XML de Surefire |
+| `allure-results-api` | Resultados crudos de Allure |
+| `allure-report-api` | Reporte HTML navegable de Allure |
 
-### Automatic Dashboard Publishing
+### Publicación automática al dashboard
 
-After every run (even on failure), the pipeline parses the Surefire XML and
-pushes the consolidated results to
+Después de cada ejecución (incluso con fallos), el pipeline parsea los XML de
+Surefire y publica los resultados consolidados en
 [Proyecto-grado-dashboard](https://github.com/AngelicaJuliethSP/Proyecto-grado-dashboard),
-which feeds the public QA dashboard:
+que alimenta el dashboard público de QA:
 **https://proyecto-grado-dashboard.streamlit.app**
 
-This makes the dashboard update **fully automatically** — no manual steps.
-It requires the `DASHBOARD_TOKEN` secret (fine-grained PAT with write access
-to the dashboard repo). If the secret is missing, the step is skipped
-gracefully and the run is not affected.
+Esto hace que el dashboard se actualice de forma **100 % automática** — sin
+pasos manuales. Requiere el secreto `DASHBOARD_TOKEN` (PAT fine-grained con
+acceso de escritura al repo del dashboard). Si el secreto no existe, el paso
+se omite de forma controlada y la ejecución no se ve afectada.
 
-## Author
+## Autora
 
 Angélica Julieth Silva Pérez — College Trainee, Globant
