@@ -41,3 +41,17 @@ jobs:
           name: allure-results-api
           path: target/allure-results/
           retention-days: 7
+
+      - name: Generate Allure HTML report
+        if: always()
+        run: |
+          npm install -g allure-commandline
+          allure generate target/allure-results -o allure-report --clean
+
+      - name: Upload Allure HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-api
+          path: allure-report/
+          retention-days: 7
