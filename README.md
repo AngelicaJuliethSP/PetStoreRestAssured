@@ -74,6 +74,31 @@ mvn clean test
 - Maven 3.6+
 - Internet access to `https://petstore.swagger.io/v2`
 
+## CI/CD Pipeline
+
+The suite runs automatically on GitHub Actions on every push/PR to `main`,
+manually (workflow_dispatch), and **daily at 06:00 UTC (01:00 Colombia)** via
+cron. Each run produces:
+
+| Artifact | Description |
+|---|---|
+| `surefire-reports-api` | Surefire XML reports |
+| `allure-results-api` | Allure raw results |
+| `allure-report-api` | Navigable Allure HTML report |
+
+### Automatic Dashboard Publishing
+
+After every run (even on failure), the pipeline parses the Surefire XML and
+pushes the consolidated results to
+[Proyecto-grado-dashboard](https://github.com/AngelicaJuliethSP/Proyecto-grado-dashboard),
+which feeds the public QA dashboard:
+**https://proyecto-grado-dashboard.streamlit.app**
+
+This makes the dashboard update **fully automatically** — no manual steps.
+It requires the `DASHBOARD_TOKEN` secret (fine-grained PAT with write access
+to the dashboard repo). If the secret is missing, the step is skipped
+gracefully and the run is not affected.
+
 ## Author
 
 Angélica Julieth Silva Pérez — College Trainee, Globant
