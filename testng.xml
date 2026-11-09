@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="PerfDog PetStore API Suite" verbose="1">
-    <test name="PerfDog Functional Tests">
+<suite name="PetStore API Suite" verbose="1">
+    <test name="Functional Tests">
         <classes>
             <class name="com.globant.automation.test.CreateUserTest"/>
             <class name="com.globant.automation.test.LoginUserTest"/>

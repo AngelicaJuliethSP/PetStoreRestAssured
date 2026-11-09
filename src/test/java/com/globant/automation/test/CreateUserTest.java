@@ -22,7 +22,7 @@ public class CreateUserTest extends TestRunner {
                 .username("qa_user_" + uniqueId)
                 .firstName("Angelica")
                 .lastName("QA")
-                .email("qa_user_" + uniqueId + "@perfdog.com")
+                .email("qa_user_" + uniqueId + "@example.com")
                 .password("Secure123!")
                 .phone("3000000000")
                 .userStatus(1)

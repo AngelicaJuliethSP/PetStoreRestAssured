@@ -30,7 +30,7 @@ public class LoginUserTest extends TestRunner {
                 .username(username)
                 .firstName("Angelica")
                 .lastName("QA")
-                .email(username + "@perfdog.com")
+                .email(username + "@example.com")
                 .password(password)
                 .phone("3000000000")
                 .userStatus(1)
