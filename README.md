@@ -6,8 +6,8 @@ Framework de automatización de pruebas de API para la [API REST Petstore](https
 
 Este proyecto automatiza seis escenarios principales contra la API Petstore:
 
-- **Obtener mascota por ID**: recuperar una mascota por su identificador y validar el esquema y los datos de la respuesta.
-- **Obtener mascotas por estado**: consultar mascotas filtradas por estado (`available`, `pending`, `sold`) y validar el contenido de la lista.
+- **Obtener mascota por ID**: recuperar una mascota por su identificador (tomado de la lista de mascotas disponibles) y validar los datos de la respuesta.
+- **Obtener mascotas por estado**: consultar mascotas filtradas por estado (`available`) y validar el contenido de la lista.
 - **Crear orden**: registrar una orden en la tienda y verificar la confirmación de la API.
 - **Crear usuario**: registrar un nuevo usuario y verificar la respuesta de la API.
 - **Login de usuario**: autenticar con credenciales válidas y validar la respuesta de la sesión.
@@ -18,10 +18,12 @@ Este proyecto automatiza seis escenarios principales contra la API Petstore:
 | Herramienta | Versión | Propósito |
 |---|---|---|
 | Java | 17 | Lenguaje de programación |
-| Maven | 3.x | Compilación y gestión de dependencias |
-| Rest Assured | 5.x | Pruebas de API REST |
+| Maven | 3.11.0 (plugin) | Compilación y gestión de dependencias |
+| Rest Assured | 5.3.1 | Pruebas de API REST |
 | TestNG | 7.10.2 | Ejecutor de pruebas y anotaciones |
-| Jackson | 2.x | Serialización/deserialización JSON |
+| Jackson | 2.17.2 | Serialización/deserialización JSON |
+| Lombok | 1.18.30 | Reducción de boilerplate en POJOs (requiere plugin en el IDE) |
+| Allure TestNG | 2.29.1 | Reportes de ejecución (allure-results/) |
 
 ## Estructura del proyecto
 
@@ -57,8 +59,12 @@ PetStoreRestAssured/
 ## Decisiones de diseño
 
 - **Arquitectura en capas**: `RequestBuilder` centraliza la especificación de Rest Assured (URI base, content type, logging); los POJOs en `model/` manejan el mapeo JSON; las clases de pruebas contienen solo aserciones y validaciones de negocio.
-- **URL base externalizada**: la URL de la API objetivo se lee de `src/test/resources/config.properties`, manteniendo los entornos configurables sin cambios de código.
+- **URL base externalizada**: la URL de la API objetivo se resuelve con la prioridad `propiedad del sistema -Durl.base` → `variable de entorno BASE_URL` → `src/test/resources/config.properties` (clave `url.base`), igual que en los otros frameworks del proyecto. Si no puede resolverse, la suite falla en `@BeforeSuite` con un mensaje claro.
 - **Validación declarativa**: las respuestas se deserializan a POJOs y se validan con aserciones de TestNG para obtener mensajes de fallo legibles.
+
+### Limitaciones conocidas
+
+- **API pública compartida**: `GetPetByIdTest` y `CreateOrderTest` toman la primera mascota de la lista `/pet/findByStatus?status=available`. Si la lista llega vacía (la API es pública y compartida), el test falla. No se limpian los usuarios ni las órdenes creados: la API Petstore no garantiza persistencia ni ofrece borrado confiable de órdenes.
 
 ## Cómo ejecutar
 
