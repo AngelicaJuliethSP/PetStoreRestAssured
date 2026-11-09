@@ -18,12 +18,12 @@ Este proyecto automatiza seis escenarios principales contra la API Petstore:
 | Herramienta | Versión | Propósito |
 |---|---|---|
 | Java | 17 | Lenguaje de programación |
-| Maven | 3.11.0 (plugin) | Compilación y gestión de dependencias |
+| Maven (compiler plugin) | 3.11.0 | Compilación (release 17) y gestión de dependencias |
 | Rest Assured | 5.3.1 | Pruebas de API REST |
 | TestNG | 7.10.2 | Ejecutor de pruebas y anotaciones |
 | Jackson | 2.17.2 | Serialización/deserialización JSON |
 | Lombok | 1.18.30 | Reducción de boilerplate en POJOs (requiere plugin en el IDE) |
-| Allure TestNG | 2.29.1 | Reportes de ejecución (allure-results/) |
+| Allure TestNG | 2.29.1 | Reportes de ejecución (target/allure-results/) |
 
 ## Estructura del proyecto
 
@@ -50,7 +50,9 @@ PetStoreRestAssured/
 │           ├── LoginUserTest.java
 │           └── LogoutUserTest.java
 ├── src/test/resources/
+│   ├── allure.properties             # Dirige los resultados Allure a target/allure-results
 │   └── config.properties             # Configuración de la URL base
+├── .github/workflows/ci.yml          # Pipeline de integración continua
 ├── testng.xml
 ├── pom.xml
 └── .gitignore
