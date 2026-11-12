@@ -103,7 +103,9 @@ que alimenta el dashboard público de QA:
 **https://proyecto-grado-dashboard.streamlit.app**
 
 Esto hace que el dashboard se actualice de forma **100 % automática** — sin
-pasos manuales. Requiere el secreto `DASHBOARD_TOKEN` (PAT fine-grained con
+pasos manuales. La publicación usa un **bucle de reintento** (hasta 5
+intentos con fetch + regeneración sobre el histórico remoto) para resolver
+la carrera cuando los 3 repos publican a la vez. Requiere el secreto `DASHBOARD_TOKEN` (PAT fine-grained con
 acceso de escritura al repo del dashboard). Si el secreto no existe, el paso
 se omite de forma controlada y la ejecución no se ve afectada.
 
